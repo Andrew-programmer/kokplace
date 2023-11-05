@@ -19,6 +19,33 @@ export const AccountPage = () => {
     setEditIsOpen(false);
   };
 
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+
+    formData.append(
+      "Logo",
+      file
+    );
+
+    formData.append(
+      "Name",
+      data.name
+    );
+
+    formData.append(
+      "Address",
+      data.address
+    );
+
+    await $authHost.put('companies', formData, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    });
+
+    navigate(0)
+  };
+
   useEffect(() => {
     $authHost("Companies/info").then(res => {
       const info = res.data;
@@ -31,6 +58,75 @@ export const AccountPage = () => {
 
   return (
     <div>
+      <Modal show={editIsOpen} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Company Info</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Container>
+            <Form.Group controlId="name" className="mb-3">
+              <Form.Label>Company name</Form.Label>
+              <Controller
+                name="name"
+                control={control}
+                defaultValue={info?.name}
+                rules={{ required: 'Name is required' }}
+                render={({ field }) => (
+                  <Form.Control
+                    type="text"
+                    placeholder="Company name"
+
+                    {...field}
+                  />
+                )}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors?.name?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Container>
+          <Container>
+            <Form.Group controlId="address" className="mb-3">
+              <Form.Label>Company Address</Form.Label>
+              <Controller
+                rules={{ required: 'Address is required' }}
+                name="address"
+                control={control}
+                defaultValue={info?.address}
+                render={({ field }) => (
+                  <Form.Control
+                    type="text"
+                    placeholder="Company Address"
+                    {...field}
+                  />
+                )}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors?.address?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Container>
+          <Container>
+            <Form.Group controlId="address" className="mb-3">
+              <Form.Label>Company Logo</Form.Label>
+              <Form.Control
+                type="file"
+                accept="image/png, image/jpeg"
+                placeholder="Company Logo"
+                onChange={e => setFile(e.target.files[0])}
+              />
+            </Form.Group>
+          </Container>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSubmit(onSubmit)}>
+            Edit info
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <NavBar></NavBar>
       <section style={{ backgroundColor: '#eee' }}>
         <div className="container py-5">
