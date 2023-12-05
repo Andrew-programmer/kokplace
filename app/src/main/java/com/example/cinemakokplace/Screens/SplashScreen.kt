@@ -35,7 +35,7 @@ import com.example.cinemakokplace.ui.theme.CinemaKokPlaceTheme
 fun SplashScreen(navController:NavController) {
     val jwtToken = JwtManager.getInstance(LocalContext.current).token
     if(!jwtToken.isNullOrBlank()) {
-        navController.navigate(Screens.ComingSoonScreen.route) {
+        navController.navigate(Screens.WatchNowScreen.route) {
             popUpTo(Screens.SplashScreen.route) {
                 inclusive = true
             }

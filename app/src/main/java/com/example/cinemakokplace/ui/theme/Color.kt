@@ -9,6 +9,7 @@ val backgroundTicket = Color(0xFFEEE7EF)
 val White = Color(0xFFFFFFFFF)
 val Disabled = Color(0xFF8A8787)
 val peach = Color(0xFFFE5B4)
+val cancel = Color(0xFF5C585D)
 
 
 

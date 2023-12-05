@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -24,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.cinemakokplace.ui.theme.CinemaKokPlaceTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -34,15 +36,22 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.cinemakokplace.Components.AuthInput
 import com.example.cinemakokplace.Components.ConfirmButton
+import com.example.cinemakokplace.Network.Status.RegisterStatus
+import com.example.cinemakokplace.Screens.Screens
 import com.example.cinemakokplace.ui.theme.mainButton
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    navController: NavController
+) {
     val screenHeight = LocalConfiguration.current.screenHeightDp
     var login by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    val loginViewModel = hiltViewModel<RegisterViewModel>()
 
     Image(
         painter = painterResource(id = R.drawable.balls),
@@ -78,7 +87,7 @@ fun LoginScreen() {
 
             AuthInput(modifier = Modifier
                 .height(90.dp)
-                .padding(top = 40.dp), placeholder = "Enter your email", onValueChange = {login = it})
+                .padding(top = 40.dp), placeholder = "Enter your login", onValueChange = {login = it})
             AuthInput(modifier = Modifier
                 .height(90.dp)
                 .padding(top = 40.dp), placeholder = "Enter password", onValueChange = {password = it})
@@ -95,8 +104,11 @@ fun LoginScreen() {
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            ConfirmButton(text = "Log in", OnClick = {})
-
+            loginUser(navController = navController,
+                loginViewModel = loginViewModel,
+                login = login,
+                password = password
+            )
 
         }
         Row(
@@ -118,11 +130,39 @@ fun LoginScreen() {
                     fontSize = 14.sp,
                     fontFamily = FontFamily.Monospace
                 ),
-                onClick = {})
+                onClick = {
+                    navController.navigate(Screens.RegistrationScreen.route) {
+                        popUpTo(Screens.LogInScreen.route) {
+                            inclusive = true
+                        }
+                    }
+                })
         }
     }
 }
+@Composable
+fun loginUser(navController: NavController, loginViewModel: RegisterViewModel, login: String, password: String){
+    val status by loginViewModel.registerResult.observeAsState()
+    when(status) {
+        is RegisterStatus.Success -> {
+            navController.navigate(Screens.WatchNowScreen.route) {
+                popUpTo(Screens.LogInScreen.route) {
+                    inclusive = true
+                }
+            }
+        }
+        is RegisterStatus.Error -> {
+            Text(text = "error")
+        }
+        else -> {
+            ConfirmButton(text = "Log in", OnClick = {
+                loginViewModel.loginUser(login, password)
+            })
+        }
+    }
 
+}
+/*
 @Composable
 @Preview
 fun OverviewLogin() {
@@ -134,4 +174,4 @@ fun OverviewLogin() {
             LoginScreen()
         }
     }
-}
+}*/

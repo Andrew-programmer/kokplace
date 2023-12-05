@@ -24,6 +24,12 @@ fun Navigation() {
         composable(Screens.ComingSoonScreen.route) {
             ComingSoonScreen(navController = navController)
         }
+        composable(Screens.WatchNowScreen.route){
+           WatchNowScreen(navController = navController)
+        }
+        composable(Screens.LogInScreen.route) {
+            LoginScreen(navController = navController)
+        }
 //        composable(Screens.MyTicketsScreen.route) {
 //        }
 //        composable(Screens.SettingsScreen.route) {

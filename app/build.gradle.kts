@@ -74,6 +74,7 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
     implementation("com.google.dagger:hilt-android:2.44.2")
     implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
+    implementation("com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0")
     kapt("com.google.dagger:hilt-compiler:2.44.2")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     testImplementation("junit:junit:4.13.2")

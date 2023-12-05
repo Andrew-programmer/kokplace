@@ -1,10 +1,8 @@
 package com.example.cinemakokplace.Components
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,7 +11,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.rememberRipple
@@ -21,7 +18,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -37,21 +33,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.cinemakokplace.Screens.Screens
 import com.example.cinemakokplace.ui.theme.CinemaKokPlaceTheme
-import com.example.cinemakokplace.ui.theme.backgroundMain
 import com.example.cinemakokplace.ui.theme.mainButton
 
 @Composable
-fun ButtomBar(
-    //WatchNow:() -> Unit,
-    //GetTicket:() -> Unit,
-    //ComingSoon:() -> Unit
+fun BottomBar(
+    navController: NavController
 ) {
 CinemaKokPlaceTheme(dynamicColor = false) {
     var currentItemId by remember {
         mutableStateOf(1)
     }
-    Box(
+     Box(
         Modifier
             .fillMaxWidth()
             .height(65.dp)
@@ -59,11 +54,11 @@ CinemaKokPlaceTheme(dynamicColor = false) {
     ){
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(
-                Modifier.absolutePadding(left = 15.dp).weight(1f),
+                Modifier.absolutePadding(left =15.dp).weight(1f),
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
                 MenuItems.WatchNow.let { watchNow ->
-                    MenuItem(item = watchNow, isSelected = watchNow.id == currentItemId, changeMenuItems = {
+                    MenuItem(navController = navController,item = watchNow, isSelected = watchNow.id == currentItemId, changeMenuItems = {
                         currentItemId = watchNow.id
                     })
                 }
@@ -76,7 +71,7 @@ CinemaKokPlaceTheme(dynamicColor = false) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
                 MenuItems.ComingSoon.let { comingSoon ->
-                    MenuItem(item = comingSoon, isSelected = comingSoon.id == currentItemId, changeMenuItems = {
+                    MenuItem(navController = navController, item = comingSoon, isSelected = comingSoon.id == currentItemId, changeMenuItems = {
                         currentItemId = comingSoon.id
                     })
                 }
@@ -90,6 +85,7 @@ CinemaKokPlaceTheme(dynamicColor = false) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MenuItem(
+    navController: NavController,
     item: MenuItems,
     isSelected: Boolean,
     changeMenuItems: () -> Unit
@@ -101,6 +97,10 @@ fun MenuItem(
                 indication = rememberRipple(bounded = true, color = Color.White)
         ) {
             changeMenuItems()
+            when(item.id) {
+                1 -> navController.navigate(Screens.WatchNowScreen.route)
+                2 -> navController.navigate(Screens.ComingSoonScreen.route)
+            }
         }
 
     ) {
@@ -132,12 +132,13 @@ fun MenuItem(
     }
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+/*@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun Main() {
-    Scaffold(bottomBar = { ButtomBar()}) {
+    Scaffold(
 
+        bottomBar = { BottomBar()}) {
     }
-}
+}*/

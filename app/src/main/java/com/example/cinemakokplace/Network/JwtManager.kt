@@ -19,6 +19,13 @@ class JwtManager @Inject constructor(@ApplicationContext private val context: Co
             }
         }
 
+    fun clearToken() {
+        with(sharedPreferences.edit()) {
+            remove(SAVE_TOKEN)
+            apply()
+        }
+    }
+
     companion object {
         private var instance: JwtManager? = null
         private const val MY_PREFERENCE = "KokPlace"

@@ -131,7 +131,13 @@ fun RegistrationScreen(
                     fontSize = 14.sp,
                     fontFamily = FontFamily.Monospace
                 ),
-                onClick = {})
+                onClick = {
+                    navController.navigate(Screens.LogInScreen.route) {
+                        popUpTo(Screens.RegistrationScreen.route) {
+                            inclusive = true
+                        }
+                    }
+                })
         }
     }
 }
