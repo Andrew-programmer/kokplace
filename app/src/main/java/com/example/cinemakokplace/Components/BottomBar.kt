@@ -1,6 +1,8 @@
 package com.example.cinemakokplace.Components
 
 import android.annotation.SuppressLint
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -25,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,9 +46,7 @@ fun BottomBar(
     navController: NavController
 ) {
 CinemaKokPlaceTheme(dynamicColor = false) {
-    var currentItemId by remember {
-        mutableStateOf(1)
-    }
+    var currentItemId by rememberSaveable { mutableStateOf(MenuItems.WatchNow.id) }
      Box(
         Modifier
             .fillMaxWidth()
@@ -59,7 +60,9 @@ CinemaKokPlaceTheme(dynamicColor = false) {
             ){
                 MenuItems.WatchNow.let { watchNow ->
                     MenuItem(navController = navController,item = watchNow, isSelected = watchNow.id == currentItemId, changeMenuItems = {
+                        Toast.makeText(navController.context, "Watch Now $currentItemId", Toast.LENGTH_LONG).show()
                         currentItemId = watchNow.id
+                        Toast.makeText(navController.context, "Watch Now $currentItemId", Toast.LENGTH_LONG).show()
                     })
                 }
             }
@@ -72,7 +75,9 @@ CinemaKokPlaceTheme(dynamicColor = false) {
             ){
                 MenuItems.ComingSoon.let { comingSoon ->
                     MenuItem(navController = navController, item = comingSoon, isSelected = comingSoon.id == currentItemId, changeMenuItems = {
+                        Toast.makeText(navController.context, "Coming soon $currentItemId", Toast.LENGTH_LONG).show()
                         currentItemId = comingSoon.id
+                        Toast.makeText(navController.context, "Coming soon $currentItemId", Toast.LENGTH_LONG).show()
                     })
                 }
             }

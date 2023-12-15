@@ -44,6 +44,7 @@ import com.example.cinemakokplace.Components.CustomDrawer
 import com.example.cinemakokplace.Components.LogoutDialog
 import com.example.cinemakokplace.Components.TopBar
 import com.example.cinemakokplace.Network.JwtManager
+import com.example.cinemakokplace.Network.Models.FilmResponse
 import com.example.cinemakokplace.R
 import com.example.cinemakokplace.ui.theme.CinemaKokPlaceTheme
 import kotlinx.coroutines.launch
@@ -92,7 +93,12 @@ fun ComingSoonScreen(navController: NavController) {
                     bottomBar = { BottomBar(navController) }
                 ) {
                     // Main screen content
-                    val films: List<String> = listOf("Interstellar", "Drive", "5 Knights of Night", "The Dark Knight", "The Dark Knight Rises", "Inception", "Tenet", "Dunkirk", "The Prestige", "Memento", "Insomnia", "Batman Begins", "Following")
+
+
+
+                    //val film_names: List<String> = listOf("Interstellar", "Drive", "5 Knights of Night", "The Dark Knight", "The Dark Knight Rises", "Inception", "Tenet", "Dunkirk", "The Prestige", "Memento", "Insomnia", "Batman Begins", "Following")
+                    val film_names:List<FilmResponse> = listOf()
+
                     LazyColumn(modifier = Modifier
                         .fillMaxSize()
                         .background(Color.Black)) {

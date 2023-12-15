@@ -93,7 +93,7 @@ fun CustomDrawer(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 modifier = Modifier.fillMaxWidth()
-                            ) {
+                            ) { // строка с текстом и иконкой
                                 Text(
                                     text = label,
                                     style = MaterialTheme.typography.titleLarge,

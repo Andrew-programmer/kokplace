@@ -43,7 +43,7 @@ fun DateScroller(
                 .clickable { selected = !selected },
             shape = RoundedCornerShape(15.dp),
             colors = CardDefaults.cardColors(mainButton),
-            border = BorderStroke(1.dp, Color(0xFFF4F4F4))
+            border = BorderStroke(1.dp, mainButton)
         ) {
             Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.fillMaxSize()) {
@@ -78,7 +78,7 @@ fun RowsOfData() {
     val DaysOfWeek = listOf<String>("MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN")
     val DaysOfMonth = listOf<Int>(1, 2, 3, 4, 5, 6, 7)
     val scrollableState by remember { mutableStateOf(0) }
-    LazyRow {
+    LazyRow (horizontalArrangement = Arrangement.spacedBy(5.dp)) {
         items(DaysOfWeek.size) { index ->
             DateScroller(selectedDay = index == scrollableState, dayOfMonth = DaysOfMonth[index], dayOfWeek = DaysOfWeek[index])
         }
