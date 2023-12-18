@@ -1,11 +1,15 @@
 package com.example.cinemakokplace
 
+import SessionScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.cinemakokplace.Screens.ComingSoonScreen
+import com.example.cinemakokplace.Screens.MovieInfoScreen
+import com.example.cinemakokplace.Screens.MyticketsScreen
 import com.example.cinemakokplace.Screens.Screens
+import com.example.cinemakokplace.Screens.SessionsScreen
 
 
 @Composable
@@ -30,18 +34,24 @@ fun Navigation() {
         composable(Screens.LogInScreen.route) {
             LoginScreen(navController = navController)
         }
-//        composable(Screens.MyTicketsScreen.route) {
-//        }
-//        composable(Screens.SettingsScreen.route) {
-//        }
-//        composable(Screens.SessionScreen.route){
-//        }
-//        composable(Screens.ComingSoonScreen.route) {
-//        }
+        composable(Screens.MyTicketsScreen.route) {
+            MyticketsScreen(navController = navController)
+        }
+        /*composable(Screens.SettingsScreen.route) {
+            Screens.SettingsScreen(navController = navController)
+        }*/
+        composable(Screens.SessionScreen.route){
+            SessionScreen(navController = navController)
+        }
+        composable(Screens.SessionsScreen.route){
+            SessionsScreen(navController = navController)
+        }
+
 //        composable(Screens.HelpScreen.route) {
 //        }
-//        composable(Screens.MovieInfoScreen.route) {
-//        }
+        composable(Screens.MovieInfoScreen.route) {
+            MovieInfoScreen(navController = navController)
+        }
 //        composable(Screens.PersonalInformationScreen.route) {
 //
 //        }

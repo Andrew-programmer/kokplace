@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerValue
@@ -53,8 +55,10 @@ import com.example.cinemakokplace.Components.ConfirmButton
 import com.example.cinemakokplace.Components.CustomDrawer
 import com.example.cinemakokplace.Components.LogoutDialog
 import com.example.cinemakokplace.Components.MenuItems
+import com.example.cinemakokplace.Components.MovieCard
 import com.example.cinemakokplace.Components.TopBar
 import com.example.cinemakokplace.Network.JwtManager
+import com.example.cinemakokplace.Network.Models.FilmResponse
 import com.example.cinemakokplace.Network.Status.RegisterStatus
 import com.example.cinemakokplace.Screens.Screens
 import com.example.cinemakokplace.ui.theme.mainButton
@@ -64,12 +68,16 @@ import kotlinx.coroutines.launch
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun WatchNowScreen(
-    navController: NavController
+    navController: NavController,
+    /*movielist: List<FilmResponse>*/
 ){
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+
+
     var showDialog by remember { mutableStateOf(false) }
+
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -102,10 +110,19 @@ fun WatchNowScreen(
                 topBar =  {
                     TopBar(cinemaAndCity = "Jakarta, Cinema KokPlace", drawerOpen = { scope.launch { drawerState.open() } })
                 },
-                bottomBar = { BottomBar(navController) }
-            ) {
-               // Основний екран
-            }
+                content = {paddingValues ->
+                    Spacer(modifier = Modifier.height(75.dp))
+                    LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                        item {
+                            Spacer(modifier = Modifier.height(55.dp))
+                        }
+                        items(5) {
+                            MovieCard(navController = navController)
+                        }
+                    }
+                },
+                bottomBar = { BottomBar(navController, menuItems = MenuItems.WatchNow) }
+            )
         }
     )
 }

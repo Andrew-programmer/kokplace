@@ -16,14 +16,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.cinemakokplace.R
+import com.example.cinemakokplace.Screens.Screens
 
 @Composable
 fun BackButton(
-    y_offset: Dp
+    y_offset: Dp,
     //Back: () -> Unit
+    navController: NavController
 ) {
-    Button(onClick = { /*TODO*/ },
+    Button(onClick = {
+        navController.navigate(Screens.MyTicketsScreen.route)
+                     },
         modifier = Modifier.size(90.dp).offset(y = y_offset),
         shape = CircleShape,
         border = BorderStroke(7.dp, Color.Black),

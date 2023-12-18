@@ -25,14 +25,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.cinemakokplace.DB.Models.FilmView
 import com.example.cinemakokplace.ui.theme.mainButton
 import com.google.mlkit.vision.text.Text
 
 @Composable
 fun DateScroller(
+
     selectedDay: Boolean,
     dayOfMonth: Int,
-    dayOfWeek: String
+    dayOfWeek: String,
 ){
     var selected by remember { mutableStateOf(selectedDay) }
     if(selected) {

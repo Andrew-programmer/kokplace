@@ -43,42 +43,41 @@ import com.example.cinemakokplace.ui.theme.mainButton
 
 @Composable
 fun BottomBar(
-    navController: NavController
+    navController: NavController,
+    menuItems: MenuItems
 ) {
 CinemaKokPlaceTheme(dynamicColor = false) {
-    var currentItemId by rememberSaveable { mutableStateOf(MenuItems.WatchNow.id) }
+    var currentItemId by remember { mutableStateOf(menuItems.id) }
      Box(
-        Modifier
-            .fillMaxWidth()
-            .height(65.dp)
-            .background(MaterialTheme.colorScheme.primary)
+         Modifier
+             .fillMaxWidth()
+             .height(65.dp)
+             .background(MaterialTheme.colorScheme.primary)
     ){
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(
-                Modifier.absolutePadding(left =15.dp).weight(1f),
+                Modifier
+                    .absolutePadding(left = 15.dp)
+                    .weight(1f),
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
                 MenuItems.WatchNow.let { watchNow ->
-                    MenuItem(navController = navController,item = watchNow, isSelected = watchNow.id == currentItemId, changeMenuItems = {
-                        Toast.makeText(navController.context, "Watch Now $currentItemId", Toast.LENGTH_LONG).show()
-                        currentItemId = watchNow.id
-                        Toast.makeText(navController.context, "Watch Now $currentItemId", Toast.LENGTH_LONG).show()
-                    })
+                    currentItemId = watchNow.id
+                    MenuItem(navController = navController,item = watchNow, isSelected = menuItems.id == currentItemId)
                 }
             }
             Spacer(modifier = Modifier.weight(1f))
-            BackButton(y_offset = -15.dp)
+            BackButton(y_offset = -15.dp, navController)
             Spacer(modifier = Modifier.weight(1f))
             Column(
-                Modifier.absolutePadding(right = 15.dp).weight(1f),
+                Modifier
+                    .absolutePadding(right = 15.dp)
+                    .weight(1f),
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
                 MenuItems.ComingSoon.let { comingSoon ->
-                    MenuItem(navController = navController, item = comingSoon, isSelected = comingSoon.id == currentItemId, changeMenuItems = {
-                        Toast.makeText(navController.context, "Coming soon $currentItemId", Toast.LENGTH_LONG).show()
-                        currentItemId = comingSoon.id
-                        Toast.makeText(navController.context, "Coming soon $currentItemId", Toast.LENGTH_LONG).show()
-                    })
+                    currentItemId = comingSoon.id
+                    MenuItem(navController = navController, item = comingSoon, isSelected = menuItems.id == currentItemId)
                 }
             }
         }
@@ -92,8 +91,7 @@ CinemaKokPlaceTheme(dynamicColor = false) {
 fun MenuItem(
     navController: NavController,
     item: MenuItems,
-    isSelected: Boolean,
-    changeMenuItems: () -> Unit
+    isSelected: Boolean
 ) {
     Card(
         colors = CardDefaults.cardColors(mainButton),
@@ -101,10 +99,17 @@ fun MenuItem(
         modifier = Modifier.clickable(interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(bounded = true, color = Color.White)
         ) {
-            changeMenuItems()
             when(item.id) {
-                1 -> navController.navigate(Screens.WatchNowScreen.route)
-                2 -> navController.navigate(Screens.ComingSoonScreen.route)
+                1 -> {
+                    if (navController.currentDestination?.route != Screens.WatchNowScreen.route) {
+                        navController.navigate(Screens.WatchNowScreen.route)
+                    }
+                }
+                2 -> {
+                    if (navController.currentDestination?.route != Screens.ComingSoonScreen.route) {
+                        navController.navigate(Screens.ComingSoonScreen.route)
+                    }
+                }
             }
         }
 

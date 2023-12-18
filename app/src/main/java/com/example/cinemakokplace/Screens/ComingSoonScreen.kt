@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +17,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
@@ -42,6 +44,7 @@ import androidx.navigation.NavController
 import com.example.cinemakokplace.Components.BottomBar
 import com.example.cinemakokplace.Components.CustomDrawer
 import com.example.cinemakokplace.Components.LogoutDialog
+import com.example.cinemakokplace.Components.MenuItems
 import com.example.cinemakokplace.Components.TopBar
 import com.example.cinemakokplace.Network.JwtManager
 import com.example.cinemakokplace.Network.Models.FilmResponse
@@ -90,7 +93,7 @@ fun ComingSoonScreen(navController: NavController) {
                     topBar =  {
                         TopBar(cinemaAndCity = "Jakarta, Cinema KokPlace", drawerOpen = { scope.launch { drawerState.open() } })
                     },
-                    bottomBar = { BottomBar(navController) }
+                    bottomBar = { BottomBar(navController, menuItems = MenuItems.ComingSoon) }
                 ) {
                     // Main screen content
 
@@ -120,7 +123,8 @@ fun ComingSoonScreen(navController: NavController) {
                             Box(modifier = Modifier
                                 .height(200.dp)
                                 .fillMaxWidth()
-                                .padding(15.dp)) {
+                                .padding(15.dp)
+                                .clickable { navController.navigate(Screens.MovieInfoScreen.route) }) {
                                 Image(
                                     painter = painterResource(id = R.drawable.film),
                                     contentDescription = film,

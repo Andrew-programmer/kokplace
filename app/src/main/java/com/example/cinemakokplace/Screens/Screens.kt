@@ -7,6 +7,7 @@ sealed class Screens(var route: String) {
     object SettingsScreen: Screens("settings")
     object MyTicketsScreen: Screens("my_tickets")
     object SessionScreen: Screens("session")
+    object SessionsScreen: Screens("sessions")
     object MessageFormScreen: Screens("message_form")
     object MovieInfoScreen: Screens("movie_info")
     object RegistrationScreen: Screens("registration")
